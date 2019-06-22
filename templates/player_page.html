@@ -1,7 +1,140 @@
 {%extends 'layout.html'%}
 
 {%block content%}
-    {{pergame}}
+    <h2>{{pergame['playername']}}</h2>
+    <h4>Team: {{pergame['teamabbr']}}</h4>
+    <h4>Games Played: {{pergame['gp']}}</h4>
+    <h4>Minutes Per Game:{{pergame['min']}}</h4>
+    
+    <div class = "container-fluid">
+        <h3>Per Game Stats</h3>
+        <table class = "table">
+            <thead>
+                
+                <th>Fgm</th>
+                <th>Fga</th>
+                <th>Fg Pct</th>
+                <th>3pm</th>
+                <th>3pa</th>
+                <th>3p Pct</th>
+                <th>Ftm</th>
+                <th>Fta</th>
+                <th>Ft Pct</th>
+                <th>Rebs</th>
+                <th>Asts</th>
+                <th>Stls</th>
+                <th>Blks</th>
+                <th>Pts</th>
+                <th>Tovs</th>
+
+
+            </thead>
+            <tbody>
+                
+                    <td>{{pergame['fgm']}}</td>
+                    <td>{{pergame['fga']}}</td>
+                    <td>{{pergame['fg_pct']}}</td>
+                    <td>{{pergame['fg3m']}}</td>
+                    <td>{{pergame['fg3a']}}</td>
+                    <td>{{pergame['fg3_pct']}}</td>
+                    <td>{{pergame['ftm']}}</td>
+                    <td>{{pergame['fta']}}</td>
+                    <td>{{pergame['ft_pct']}}</td>
+                    <td>{{pergame['treb']}}</td>
+                    <td>{{pergame['ast']}}</td>
+                    <td>{{pergame['stl']}}</td>
+                    <td>{{pergame['blk']}}</td>
+                    <td>{{pergame['pts']}}</td>
+                    <td>{{pergame['tov']}}</td>
+            </tbody>
+        </table>
+        <h3>ZScores</h3>
+        <table class = "table">
+            <thead>
+                <th>Fgz</th>
+                <th>Ftz</th>
+                <th>3pz</th>
+                <th>Rebz</th>
+                <th>Astz</th>
+                <th>Stlz</th>
+                <th>Blkz</th>
+                <th>Ptz</th>
+                <th>Tovz</th>
+                <th>Total</th>
+
+
+            </thead>
+            <tbody>
+                
+                    <td>{{zscore['fgz']}}</td>
+                    <td>{{zscore['ftz']}}</td>
+                    <td>{{zscore['fg3z']}}</td>
+                    <td>{{zscore['rebz']}}</td>
+                    <td>{{zscore['astz']}}</td>
+                    <td>{{zscore['stlz']}}</td>
+                    <td>{{zscore['blkz']}}</td>
+                    <td>{{zscore['ptsz']}}</td>
+                    <td>{{zscore['tovz']}}</td>
+                    <td>{{zscore['total']}}</td>
+
+            </tbody>
+        </table>
+        <h3>Game Log</h3>
+        <table class = "table">
+            <thead>
+                <th>GameDate</th>
+                <th>Matchup</th>
+                <th>Result</th>
+                <th>Mins</th>
+                <th>Fgm</th>
+                <th>Fga</th>
+                <th>Fg Pct</th>
+                <th>3pm</th>
+                <th>3pa</th>
+                <th>3p Pct</th>
+                <th>Ftm</th>
+                <th>Fta</th>
+                <th>Ft Pct</th>
+                <th>Rebs</th>
+                <th>Asts</th>
+                <th>Stls</th>
+                <th>Blks</th>
+                <th>Pts</th>
+                <th>Tovs</th>
+
+
+            </thead>
+            <tbody>
+                    {%for game in gamelog%}
+                <tr>
+                   
+                    <td>{{game['gamedate']}}</td>
+                    <td>{{game['matchup']}}</td>
+                    <td>{{game['win']}}</td>
+                    <td>{{game['min']}}</td>
+                    <td>{{game['fgm']}}</td>
+                    <td>{{game['fga']}}</td>
+                    <td>{{game['fg_pct']}}</td>
+                    <td>{{game['fg3m']}}</td>
+                    <td>{{game['fg3a']}}</td>
+                    <td>{{game['fg3_pct']}}</td>
+                    <td>{{game['ftm']}}</td>
+                    <td>{{game['fta']}}</td>
+                    <td>{{game['ft_pct']}}</td>
+                    <td>{{game['reb']}}</td>
+                    <td>{{game['ast']}}</td>
+                    <td>{{game['stl']}}</td>
+                    <td>{{game['blk']}}</td>
+                    <td>{{game['pts']}}</td>
+                    <td>{{game['tov']}}</td>
+                    
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- {{pergame}}
     {{zscore}}
-    {{gamelog}}
+    {{gamelog}} -->
 {%endblock content%}

@@ -166,13 +166,21 @@ def player_page(player):
     mycursor = db.cursor()
     sql = 'SELECT * FROM playergamelog WHERE(playerid=%s)'%(id)
     mycursor.execute(sql)
-    gamelog = mycursor.fetchall()
+    desc = mycursor.description
+    columns = [col[0] for col in desc]
+    gamelog= [dict(zip(columns,row)) for row in mycursor]
     sql = 'SELECT * FROM playerstats WHERE(playerid=%s)'%(id)
     mycursor.execute(sql)
-    pergame = mycursor.fetchall()
+    desc = mycursor.description
+    columns = [col[0] for col in desc]
+    pergame= [dict(zip(columns,row)) for row in mycursor]
+    pergame=pergame[0]
     sql = 'SELECT * FROM playerstatsz WHERE(playerid=%s)'%(id)
     mycursor.execute(sql)
-    zscore = mycursor.fetchall()
+    desc = mycursor.description
+    columns = [col[0] for col in desc]
+    zscore= [dict(zip(columns,row)) for row in mycursor]
+    zscore=zscore[0]
     return render_template('player_page.html', gamelog=gamelog, pergame=pergame,zscore=zscore)
 
 @app.route("/teams")
@@ -193,9 +201,29 @@ def teams():
         rosters = mycursor.fetchall()
         sql = "SELECT * FROM playerstats WHERE(teamid = " + str(rosters[0][0]) + ") ORDER BY pts DESC"
         mycursor.execute(sql)
-        players[team] = mycursor.fetchall()
-
+        desc = mycursor.description
+        columns = [col[0] for col in desc]
+        players[team] = [dict(zip(columns,row)) for row in mycursor]
 
     return render_template('teams.html', rosters=players)
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
+
+# playerstats
+#{'playerid': 1628381, 'playername': 'John Collins', 'teamid': 1610612737, 'teamabbr': 'ATL', 'gp': 61, 'win': 24, 'loss': 37, 'min': Decimal('30.0'),
+# 'fgm': Decimal('7.6'),'fga': Decimal('13.6'), 'fg_pct': Decimal('0.560'), 'fg3m': Decimal('0.9'), 'fg3a': Decimal('2.6'), 'fg3_pct': Decimal('0.348'), 
+# 'ftm': Decimal('3.3'), 'fta': Decimal('4.4'), 'ft_pct': Decimal('0.763'), 'oreb': Decimal('3.6'), 'dreb': Decimal('6.2'), 'treb': Decimal('9.8'), 
+# 'ast': Decimal('2.0'), 'stl': Decimal('0.4'), 'blk': Decimal('0.6'), 'pts': Decimal('19.5'), 'tov': Decimal('2.0'), 'fouls': Decimal('3.3')}
+
+#playerstatsz
+#{'playerid': 1629541, 'playername': 'Dairis Bertans', 'teamid': 1610612740, 'teamabbr': 'NOP', 'gp': 12, 'min': Decimal('13.9'), 
+# 'fgz': Decimal('-1.59'), 'ftz': Decimal('-0.94'), 'fg3z': Decimal('-0.15'), 'rebz': Decimal('-1.16'), 'astz': Decimal('-0.67'), 
+# 'stlz': Decimal('-1.27'), 'blkz': Decimal('-0.98'), 'ptsz': Decimal('-1.01'), 'tovz': Decimal('-1.11'), 'total': Decimal('-6.66')}
+
+#playergamelog
+#{'seasonid': 22018, 'playerid': 1629541, 'gameid': 21801215, 'gamedate': datetime.date(2019, 4, 9), 'matchup': 'NOP vs. GSW', 'win': 'L', 
+# 'min': 26, 'fgm': 0, 'fga': 4, 'fg_pct': Decimal('0.000'), 'fg3m': 0, 'fg3a': 2, 'fg3_pct': Decimal('0.000'), 'ftm': 0, 'fta': 0, 
+# 'ft_pct': Decimal('0.000'), 'oreb': 0, 'dreb': 0, 'reb': 0, 'ast': 2, 'stl': 0, 'blk': 0, 'tov': 0, 'pf': 1, 'pts': 0, 'plusminus': -7}
+
+#games
+#{'season': 22018, 'teamid': 1610612744, 'teamname': 'Golden State Warriors', 'gamedate': datetime.date(2019, 4, 10), 'matchup': 'GSW @ MEM', 'gameid': 21801225}

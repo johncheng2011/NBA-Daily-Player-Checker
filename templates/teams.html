@@ -7,14 +7,36 @@
 <div class="container-fluid" style="width:100%">
     <div class="row">
     {%for team in rosters%}
-    <div class="col-sm-4">
-            <br>
+    <div class="col-sm-4">  
             <h3>{{team|replace('_',' ')}}</h3>
+            <table class="table table-bordered">
+                    <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Rebs</th>
+                                <th>Asts</th>
+                                <th>Stls</th>
+                                <th>Blks</th>
+                                <th>Pts</th>
+                                <th>Tovs</th>
+                            </tr>
+                        </thead>
+                        <tbody>
             {%for player in rosters[team]%}
-                {%set url = player[1]|string + '_' + player[0]|string%}
-                <a href="{{url_for('player_page',player=url)}}">{{player[1]}}</a>
-                <br>
+                    {%set url = player['playername']|string + '_' + player['playerid']|string%}
+                   <tr>
+                        <td><a href="{{url_for('player_page',player=url)}}">{{player['playername']}}</a></td>
+                        <td>{{player['treb']}}</td>
+                        <td>{{player['ast']}}</td>
+                        <td>{{player['stl']}}</td>
+                        <td>{{player['blk']}}</td>
+                        <td>{{player['pts']}}</td>
+                        <td>{{player['tov']}}</td>
+                        
+                    </tr>
             {%endfor%}
+        </tbody>
+        </table>
     </div>
     {%endfor%}
 
