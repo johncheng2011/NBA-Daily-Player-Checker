@@ -50,6 +50,62 @@
                   
     </div>
 </div>
+<div class = 'row'>
+  <u><h2>Random Player</h2> </u>
+</div>
+<div class ='row'>
+  {%set url = player['playername']|string + '_' + player['playerid']|string%}
+  <h2><a href = "{{url_for('player_page',player=url)}}">{{player['playername']}}</a></h2>
+</div>
+<div class ='row'>
+  <h3> Team: {{player['teamabbr']}}  Minutes: {{player['min']}}  Games Played:{{player['gp']}} </h3>
+  <table class = 'table'>
+    <thead>
+      <tr>
+          <th></th>
+          <th>Field Goal Percentage</th>
+          <th>Free Throw Percentage</th>
+          <th>3 Pointers Made</th>
+          <th>Rebounds</th>
+          <th>Assists</th>
+          <th>Steals</th>
+          <th>Blocks</th>
+          <th>Points</th>
+          <th>Turnovers</th>
+          <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><b>PerGame Stats</b></td>
+          <td>{{player['fg_pct']}}</td>
+          <td>{{player['ft_pct']}}</td>
+          <td>{{player['fg3m']}}</td>
+          <td>{{player['treb']}}</td>
+          <td>{{player['ast']}}</td>
+          <td>{{player['stl']}}</td>
+          <td>{{player['blk']}}</td>
+          <td>{{player['pts']}}</td>
+          <td>{{player['tov']}}</td>
+        </tr>
+        <tr>
+            <td><b>Z Scores</b></td>
+            <td>{{playerz['fgz']}}</td>
+            <td>{{playerz['ftz']}}</td>
+            <td>{{playerz['fg3z']}}</td>
+            <td>{{playerz['rebz']}}</td>
+            <td>{{playerz['astz']}}</td>
+            <td>{{playerz['stlz']}}</td>
+            <td>{{playerz['blkz']}}</td>
+            <td>{{playerz['ptsz']}}</td>
+            <td>{{playerz['tovz']}}</td>
+            <td>{{playerz['total']}}</td>
+          </tr>
+    </tbody>
+    
+  </table>
+
+</div>
 </div>
 
 

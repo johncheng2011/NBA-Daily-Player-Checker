@@ -1,6 +1,13 @@
 {%extends 'layout.html'%}
 
 {%block content%}
+
+<script src="https://d3js.org/d3.v5.min.js"></script>
+
+<script type="text/javascript">
+  {% include "chart.js" %}
+</script>
+
     <h2>{{pergame['playername']}}</h2>
     <h4>Team: {{pergame['teamabbr']}}</h4>
     <h4>Games Played: {{pergame['gp']}}</h4>
@@ -79,6 +86,13 @@
 
             </tbody>
         </table>
+
+        <div id='chart'></div>
+        <div id='chart'></div>
+        <div id='chart'></div>
+        <div id='chart'></div>
+        <div id='chart'></div>
+        <div id='chart'></div>
         <h3>Game Log</h3>
         <table class = "table">
             <thead>
@@ -138,3 +152,4 @@
     {{zscore}}
     {{gamelog}} -->
 {%endblock content%}
+

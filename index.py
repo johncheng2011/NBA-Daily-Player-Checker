@@ -10,6 +10,7 @@ from Data_Scripts import database
 from flask_cors import CORS
 import pandas as pd
 import time
+import random
 app = Flask(__name__)
 CORS(app)
 
@@ -47,6 +48,29 @@ class date(FlaskForm):
 @app.route("/", methods=['POST','GET'])
 def index():
     form = date()
+    db = mysql.connector.connect(
+    host =  database.databaseInfo["host"],
+    user = database.databaseInfo["user"],
+    passwd = database.databaseInfo["passwd"],
+    database = database.databaseInfo["database"]
+)
+    mycursor = db.cursor()
+    players = []
+    
+    mycursor.execute('SELECT * FROM playerstats')
+    desc = mycursor.description
+    columns = [col[0] for col in desc]
+    players = [dict(zip(columns,row)) for row in mycursor]
+    
+    i = random.randint(0, len(players))
+    player=players[i]
+
+    mycursor.execute('SELECT * FROM playerstatsz WHERE(playerid = %s)'%(player['playerid']))
+    desc = mycursor.description
+    columns = [col[0] for col in desc]
+    playerz = [dict(zip(columns,row)) for row in mycursor]
+    playerz = playerz[0]
+    db.disconnect() 
     if form.validate_on_submit():
         if(form.selectType.data == '1'):
             inDate = form.enterDate.data
@@ -54,7 +78,7 @@ def index():
             return redirect(url_for('players',date=inDate))
         else:
             return redirect(url_for('playerzscores',date=form.enterDate.data))
-    return render_template('index.html',form = form,title="home")
+    return render_template('index.html',form = form,title="home",player=player,playerz=playerz)
 
 
 
@@ -169,6 +193,11 @@ def player_page(player):
     desc = mycursor.description
     columns = [col[0] for col in desc]
     gamelog= [dict(zip(columns,row)) for row in mycursor]
+    for game in gamelog:
+        game['gamedate'] = str(game['gamedate'])
+        game['fg_pct'] = float( game['fg_pct'])
+        game['ft_pct'] = float( game['ft_pct'])
+        game['fg3_pct'] = float( game['fg3_pct'])
     sql = 'SELECT * FROM playerstats WHERE(playerid=%s)'%(id)
     mycursor.execute(sql)
     desc = mycursor.description
@@ -207,7 +236,7 @@ def teams():
 
     return render_template('teams.html', rosters=players)
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0',debug=True)
 
 # playerstats
 #{'playerid': 1628381, 'playername': 'John Collins', 'teamid': 1610612737, 'teamabbr': 'ATL', 'gp': 61, 'win': 24, 'loss': 37, 'min': Decimal('30.0'),
