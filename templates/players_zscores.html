@@ -3,8 +3,8 @@
 
 {% block content %}
 
-    <a href = "{{url_for('players',date=date|yesterdayDate)}}"><button class = "btn btn-primary float-left">Yesterday</button></a>
-    <a href = "{{url_for('players',date=date|tomorrowDate)}}"><button class = "btn btn-primary float-right">Tomorrow</button></a>
+    <a href = "{{url_for('playerzscores',date=date|yesterdayDate)}}"><button class = "btn btn-primary float-left">Yesterday</button></a>
+    <a href = "{{url_for('playerzscores',date=date|tomorrowDate)}}"><button class = "btn btn-primary float-right">Tomorrow</button></a>
     <br>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
