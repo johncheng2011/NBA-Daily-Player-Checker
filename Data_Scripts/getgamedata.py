@@ -1,7 +1,7 @@
 import mysql.connector
 from nba_api.stats.endpoints import leaguegamelog
 import database
-game = leaguegamelog.LeagueGameLog()
+game = leaguegamelog.LeagueGameLog(season='2018-19')
 game = game.get_dict()
 mydb = mysql.connector.connect(
     host =  database.databaseInfo["host"],
